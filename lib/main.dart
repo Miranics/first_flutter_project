@@ -9,9 +9,9 @@ void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
   SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-    statusBarColor: Colors.transparent,
-    statusBarIconBrightness: Brightness.light,
-    statusBarBrightness: Brightness.dark,
+    statusBarColor: Colors.transparent, // keep transparent so gradient shows
+    statusBarIconBrightness: Brightness.dark, // dark icons for lighter top
+    statusBarBrightness: Brightness.light,
   ));
   runApp(const MyApp());
 }
@@ -63,9 +63,12 @@ class _HelloScreenState extends State<HelloScreen> {
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Color(0xFF141E30), Color(0xFF243B55)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+            colors: [
+              Color(0xFFE3F2FD), // light top so status bar items are clear
+              Color(0xFF243B55),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
           ),
         ),
         width: double.infinity,
