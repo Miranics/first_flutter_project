@@ -1,36 +1,131 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 
-const String myname = 'Nanen Miracle Mbanaade';
+const String studentName = 'Nanen Miracle Mbanaade';
 
-void main() {
-  runApp(const MyApp());
-}
+void main() => runApp(const MyApp());
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+  @override
+  Widget build(BuildContext context) => MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'First Flutter Project',
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo),
+          textTheme: ThemeData.light().textTheme.apply(bodyColor: Colors.white),
+        ),
+        home: const HelloScreen(),
+      );
+}
+
+class HelloScreen extends StatefulWidget {
+  const HelloScreen({super.key});
+  @override
+  State<HelloScreen> createState() => _HelloScreenState();
+}
+
+class _HelloScreenState extends State<HelloScreen> {
+  late Timer _timer;
+  DateTime now = DateTime.now();
+
+  @override
+  void initState() {
+    super.initState();
+    _timer = Timer.periodic(const Duration(seconds: 1), (_) {
+      setState(() => now = DateTime.now());
+    });
+  }
+
+  @override
+  void dispose() {
+    _timer.cancel();
+    super.dispose();
+  }
+
+  String get dateString => '${now.year}-${_two(now.month)}-${_two(now.day)}';
+  String get timeString => '${_two(now.hour)}:${_two(now.minute)}:${_two(now.second)}';
 
   @override
   Widget build(BuildContext context) {
-    final today = DateTime.now();
-    final dateString = '${today.year}-${_two(today.month)}-${_two(today.day)}';
-    final greeting = 'Hello World - $myname';
-    return MaterialApp(
-      title: 'First Flutter Project',
-      theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo)),
-      home: Scaffold(
-        appBar: AppBar(title: const Text('First Flutter Project')),
-        body: Center(
+    return Scaffold(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFF141E30), Color(0xFF243B55)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        width: double.infinity,
+        child: SafeArea(
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Text(greeting, style: Theme.of(context).textTheme.headlineSmall),
-              const SizedBox(height: 12),
-              Text('Date: $dateString', style: Theme.of(context).textTheme.bodyMedium),
+              Text('Hello World',
+                  style: Theme.of(context).textTheme.displaySmall?.copyWith(
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      )),
+              const SizedBox(height: 8),
+              Text(studentName,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        fontWeight: FontWeight.w600,
+                        color: Colors.amberAccent,
+                      )),
               const SizedBox(height: 24),
-              const Text('(Ensure your face & today\'s date are visible in the video)')
+              Wrap(
+                spacing: 24,
+                runSpacing: 12,
+                alignment: WrapAlignment.center,
+                children: [
+                  _InfoChip(label: 'Date', value: dateString),
+                  _InfoChip(label: 'Time', value: timeString),
+                ],
+              ),
+              const SizedBox(height: 40),
+              Text(
+                'Show this screen + your face + system date in the video',
+                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white70),
+                textAlign: TextAlign.center,
+              ),
             ],
           ),
         ),
+      ),
+    );
+  }
+}
+
+class _InfoChip extends StatelessWidget {
+  final String label;
+  final String value;
+  const _InfoChip({required this.label, required this.value});
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      decoration: BoxDecoration(
+        color: Colors.white.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.white24),
+      ),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text(label.toUpperCase(),
+              style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                    color: Colors.white70,
+                    letterSpacing: 1.2,
+                  )),
+          const SizedBox(height: 4),
+          Text(value,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: Colors.white,
+                    fontFeatures: const [FontFeature.tabularFigures()],
+                  )),
+        ],
       ),
     );
   }

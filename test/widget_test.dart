@@ -11,9 +11,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:first_project/main.dart';
 
 void main() {
-  testWidgets('Shows Hello World greeting with name placeholder', (WidgetTester tester) async {
+  testWidgets('Shows Hello World and student name', (WidgetTester tester) async {
     await tester.pumpWidget(const MyApp());
-    expect(find.textContaining('Hello World'), findsOneWidget);
-    expect(find.textContaining('Your Name'), findsOneWidget, reason: 'Replace Your Name with your real name before submission');
+    expect(find.text('Hello World'), findsOneWidget);
+    expect(find.textContaining('Nanen Miracle Mbanaade'), findsOneWidget);
   });
 }
