@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-// Replace this with your real name BEFORE recording the demo video.
-const String studentName = 'Your Name';
+const String myname = 'Nanen Miracle Mbanaade';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final today = DateTime.now();
     final dateString = '${today.year}-${_two(today.month)}-${_two(today.day)}';
-    final greeting = 'Hello World - $studentName';
+    final greeting = 'Hello World - $myname';
     return MaterialApp(
       title: 'First Flutter Project',
       theme: ThemeData(colorScheme: ColorScheme.fromSeed(seedColor: Colors.indigo)),
