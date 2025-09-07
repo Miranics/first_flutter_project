@@ -1,6 +1,6 @@
 # First Flutter Project – Hello World + Name
 
-This app displays a greeting (Hello World - Your Name) and today’s date. It is tailored for an assignment that requires running on an Android emulator or physical device (web not allowed).
+This app displays a greeting (Hello World ) and my name. It is tailored for an assignment that requires running on an Android emulator or physical device (web not allowed).
 
 ## Quick Run
 ```
@@ -8,9 +8,6 @@ flutter pub get
 flutter devices          # ensure an Android emulator shows
 flutter run -d <emulator-id>
 ```
-
-## Edit Your Name
-Update `studentName` constant in `lib/main.dart` before recording the demo video.
 
 ## Emulator Troubleshooting (Android)
 If the emulator shows black screen or stays `offline`:
@@ -44,12 +41,9 @@ emulator -avd LiteAPI34 -no-snapshot -gpu swiftshader_indirect -memory 1536
 | Very slow build | Reduced Gradle heap in `android/gradle.properties`, optional `--release` run |
 | Licensing errors | `flutter doctor --android-licenses` |
 
-## Assignment PDF Checklist
-Include: environment setup notes, errors & resolutions, screenshot of running emulator with date, accessible video link, reflection.
 
 ## References
 - [Flutter Docs](https://docs.flutter.dev/)
 - [Android Emulator Troubleshooting](https://developer.android.com/studio/run/emulator-troubleshooting)
 
 ---
-Auto-added guidance to streamline submission.
