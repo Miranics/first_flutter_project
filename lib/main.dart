@@ -1,9 +1,20 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 const String studentName = 'Nanen Miracle Mbanaade';
 
-void main() => runApp(const MyApp());
+void main() {
+  // Ensure status bar (battery, time, network) is visible.
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: SystemUiOverlay.values);
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarColor: Colors.transparent,
+    statusBarIconBrightness: Brightness.light,
+    statusBarBrightness: Brightness.dark,
+  ));
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -76,19 +87,13 @@ class _HelloScreenState extends State<HelloScreen> {
                       )),
               const SizedBox(height: 24),
               Wrap(
-                spacing: 24,
-                runSpacing: 12,
+                spacing: 28,
+                runSpacing: 20,
                 alignment: WrapAlignment.center,
                 children: [
-                  _InfoChip(label: 'Date', value: dateString),
-                  _InfoChip(label: 'Time', value: timeString),
+                  _CircleInfo(label: 'DATE', value: dateString),
+                  _CircleInfo(label: 'TIME', value: timeString),
                 ],
-              ),
-              const SizedBox(height: 40),
-              Text(
-                'Show this screen + your face + system date in the video',
-                style: Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white70),
-                textAlign: TextAlign.center,
               ),
             ],
           ),
@@ -98,34 +103,55 @@ class _HelloScreenState extends State<HelloScreen> {
   }
 }
 
-class _InfoChip extends StatelessWidget {
+class _CircleInfo extends StatelessWidget {
   final String label;
   final String value;
-  const _InfoChip({required this.label, required this.value});
+  const _CircleInfo({required this.label, required this.value});
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      width: 120,
+      height: 120,
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.white24),
+        shape: BoxShape.circle,
+        gradient: RadialGradient(
+          colors: [
+            Colors.white.withOpacity(0.25),
+            Colors.white.withOpacity(0.05),
+          ],
+          center: Alignment.topLeft,
+          radius: 0.95,
+        ),
+        border: Border.all(color: Colors.white30, width: 1.2),
+        boxShadow: const [
+          BoxShadow(
+            color: Colors.black54,
+            blurRadius: 8,
+            offset: Offset(0, 4),
+          )
+        ],
       ),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(label.toUpperCase(),
-              style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                    color: Colors.white70,
-                    letterSpacing: 1.2,
-                  )),
-          const SizedBox(height: 4),
-          Text(value,
+      child: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(label,
+                style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                      color: Colors.white70,
+                      letterSpacing: 1.5,
+                    )),
+            const SizedBox(height: 6),
+            Text(
+              value,
+              textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
                     color: Colors.white,
+                    fontWeight: FontWeight.w600,
                     fontFeatures: const [FontFeature.tabularFigures()],
-                  )),
-        ],
+                  ),
+            ),
+          ],
+        ),
       ),
     );
   }
